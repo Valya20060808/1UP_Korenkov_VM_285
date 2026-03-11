@@ -1,0 +1,155 @@
+﻿<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Детали заявки - Учёт заявок на ремонт</title>
+    <link rel="stylesheet" href="/css/styles.css">
+
+    <script src="https://cdn.jsdelivr.net/npm/qrcodejs@1.0.0/qrcode.min.js"></script>
+</head>
+<body>
+
+    <nav class="navbar">
+        <div class="nav-brand">
+            <a href="/pages/requests.html">Ремонт климатического оборудования</a>
+        </div>
+        <ul class="nav-menu"></ul>
+    </nav>
+
+    <div class="container">
+
+        <button class="btn btn-secondary" onclick="goBack()" style="margin-bottom: 20px;">
+            ← Назад к списку
+        </button>
+
+        <div id="loading" class="loading">Загрузка данных заявки...</div>
+
+        <div id="requestDetails" style="display: none;">
+            <div class="card">
+                <div class="card-header">
+                    <h2>Заявка #<span id="requestId"></span></h2>
+                    <span class="status-badge" id="requestStatus"></span>
+                </div>
+
+                <div class="form-row">
+                    <div class="form-group">
+                        <label>Дата создания</label>
+                        <p id="startDate" class="form-control-static"></p>
+                    </div>
+                    <div class="form-group">
+                        <label>Срок выполнения</label>
+                        <p id="deadline" class="form-control-static"></p>
+                    </div>
+                </div>
+
+                <div class="form-row">
+                    <div class="form-group">
+                        <label>Тип оборудования</label>
+                        <p id="equipmentType" class="form-control-static"></p>
+                    </div>
+                    <div class="form-group">
+                        <label>Модель</label>
+                        <p id="equipmentModel" class="form-control-static"></p>
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    <label>Описание проблемы</label>
+                    <p id="problemDescription" class="form-control-static"></p>
+                </div>
+
+                <div class="form-row">
+                    <div class="form-group">
+                        <label>Заказчик</label>
+                        <p id="clientName" class="form-control-static"></p>
+                    </div>
+                    <div class="form-group">
+                        <label>Специалист</label>
+                        <p id="masterName" class="form-control-static"></p>
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    <label>Использованные запчасти</label>
+                    <p id="repairParts" class="form-control-static"></p>
+                </div>
+
+                <div class="form-group">
+                    <label>Дата завершения</label>
+                    <p id="completionDate" class="form-control-static"></p>
+                </div>
+
+                <div id="actionButtons" class="form-row" style="margin-top: 20px;"></div>
+            </div>
+
+            <div class="card">
+                <div class="card-header">
+                    <h3>Комментарии</h3>
+                </div>
+
+                <div id="commentsList" class="comments-section"></div>
+
+                <div id="addCommentForm" style="margin-top: 20px; display: none;">
+                    <h4>Добавить комментарий</h4>
+                    <form onsubmit="handleAddComment(event)">
+                        <div class="form-group">
+                            <textarea id="commentText" rows="3" required
+                                      placeholder="Введите ваш комментарий..."></textarea>
+                        </div>
+                        <button type="submit" class="btn btn-primary">Отправить</button>
+                    </form>
+                </div>
+            </div>
+
+            <div id="qrCodeSection" class="card" style="text-align: center; display: none;">
+                <h3>Оцените качество ремонта</h3>
+                <div id="qrcode"></div>
+                <p>Отсканируйте QR-код, чтобы оставить отзыв</p>
+            </div>
+        </div>
+
+
+        <div id="errorMessage" class="alert alert-danger" style="display: none;"></div>
+    </div>
+
+
+    <div id="assignMasterModal" class="modal">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h3>Назначить специалиста</h3>
+                <span class="close-btn" onclick="closeModal('assignMasterModal')">&times;</span>
+            </div>
+            <form id="assignMasterForm">
+                <div class="form-group">
+                    <label for="masterSelect">Выберите специалиста</label>
+                    <select id="masterSelect" required>
+                        <option value="">Загрузка...</option>
+                    </select>
+                </div>
+                <button type="submit" class="btn btn-primary">Назначить</button>
+            </form>
+        </div>
+    </div>
+
+    <div id="extendDeadlineModal" class="modal">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h3>Продлить срок выполнения</h3>
+                <span class="close-btn" onclick="closeModal('extendDeadlineModal')">&times;</span>
+            </div>
+            <form id="extendDeadlineForm">
+                <div class="form-group">
+                    <label for="newDeadline">Новая дата выполнения</label>
+                    <input type="datetime-local" id="newDeadline" required>
+                </div>
+                <button type="submit" class="btn btn-primary">Продлить</button>
+            </form>
+        </div>
+    </div>
+
+    <script src="/js/api.js"></script>
+    <script src="/js/navigation.js"></script>
+    <script src="/js/request-detail.js"></script>
+</body>
+</html>

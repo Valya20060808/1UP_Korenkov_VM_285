@@ -1,0 +1,119 @@
+﻿<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Статистика - Учёт заявок на ремонт</title>
+    <link rel="stylesheet" href="/css/styles.css">
+    <script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.0/dist/chart.umd.min.js"></script>
+</head>
+<body>
+    <nav class="navbar">
+        <div class="nav-brand">
+            <a href="/pages/requests.html">Ремонт климатического оборудования</a>
+        </div>
+        <ul class="nav-menu"></ul>
+    </nav>
+
+    <div class="container">
+        <button class="btn btn-secondary" onclick="goBack()" style="margin-bottom: 20px;">
+            ← Назад к списку заявок
+        </button>
+
+        <div class="card">
+            <div class="card-header">
+                <h2>Статистика и отчёты</h2>
+            </div>
+        </div>
+
+        <div id="loading" class="loading">Загрузка статистики...</div>
+
+        <div id="statisticsContent" style="display: none;">
+            <div class="form-row" style="grid-template-columns: repeat(3, 1fr);">
+                <div class="card" style="text-align: center;">
+                    <h3 style="color: #667eea; font-size: 2.5rem; margin: 10px 0;" id="totalRequests">0</h3>
+                    <p style="color: #666;">Всего заявок</p>
+                </div>
+                <div class="card" style="text-align: center;">
+                    <h3 style="color: #28a745; font-size: 2.5rem; margin: 10px 0;" id="completedRequests">0</h3>
+                    <p style="color: #666;">Выполнено заявок</p>
+                </div>
+                <div class="card" style="text-align: center;">
+                    <h3 style="color: #ffc107; font-size: 2.5rem; margin: 10px 0;" id="avgCompletionDays">0</h3>
+                    <p style="color: #666;">Ср. время ремонта (дней)</p>
+                </div>
+            </div>
+
+            <div class="form-row" style="grid-template-columns: 1fr 1fr;">
+                <div class="card">
+                    <h3 style="margin-bottom: 20px;">Распределение по статусам</h3>
+                    <canvas id="statusChart" style="max-height: 300px;"></canvas>
+                </div>
+
+                <div class="card">
+                    <h3 style="margin-bottom: 20px;">Распределение по типам оборудования</h3>
+                    <canvas id="equipmentChart" style="max-height: 300px;"></canvas>
+                </div>
+            </div>
+
+            <div class="card">
+                <div class="card-header">
+                    <h3>Детальная статистика</h3>
+                    <button class="btn btn-success" onclick="exportToCSV()">📥 Экспорт в CSV</button>
+                </div>
+
+                <div class="table-container">
+                    <table>
+                        <thead>
+                            <tr>
+                                <th>Показатель</th>
+                                <th>Значение</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <td>Всего заявок</td>
+                                <td id="detailTotal">0</td>
+                            </tr>
+                            <tr>
+                                <td>Выполнено заявок</td>
+                                <td id="detailCompleted">0</td>
+                            </tr>
+                            <tr>
+                                <td>В процессе ремонта</td>
+                                <td id="detailInProgress">0</td>
+                            </tr>
+                            <tr>
+                                <td>Новые заявки</td>
+                                <td id="detailNew">0</td>
+                            </tr>
+                            <tr>
+                                <td>Ожидание комплектующих</td>
+                                <td id="detailWaiting">0</td>
+                            </tr>
+                            <tr>
+                                <td>Среднее время ремонта</td>
+                                <td id="detailAvgDays">0 дней</td>
+                            </tr>
+                            <tr>
+                                <td>Самая популярная техника</td>
+                                <td id="mostPopularEquipment">—</td>
+                            </tr>
+                            <tr>
+                                <td>Самый активный статус</td>
+                                <td id="mostActiveStatus">—</td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+
+        <div id="errorMessage" class="alert alert-danger" style="display: none;"></div>
+    </div>
+
+    <script src="/js/api.js"></script>
+    <script src="/js/navigation.js"></script>
+    <script src="/js/statistics.js"></script>
+</body>
+</html>

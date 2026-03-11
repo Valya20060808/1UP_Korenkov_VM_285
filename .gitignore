@@ -1,0 +1,21 @@
+﻿## Visual Studio
+.vs/
+## .NET Core
+bin/
+obj/
+*.user
+*.suo
+*.userprefs
+*.swp
+.DS_Store
+## Build results
+[Bb]uild/
+## NuGet Packages
+packages/
+*.nupkg
+## Environment Files
+appsettings.Production.json
+appsettings.Development.json.local
+## Logs
+logs/
+*.log

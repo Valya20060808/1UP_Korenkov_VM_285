@@ -1,0 +1,82 @@
+﻿<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Создание заявки - Учёт заявок на ремонт</title>
+    <link rel="stylesheet" href="/css/styles.css">
+</head>
+<body>
+
+    <nav class="navbar">
+        <div class="nav-brand">
+            <a href="/pages/requests.html">Ремонт климатического оборудования</a>
+        </div>
+        <ul class="nav-menu"></ul>
+    </nav>
+
+    <div class="container">
+
+        <button class="btn btn-secondary" onclick="goBack()" style="margin-bottom: 20px;">
+            ← Назад к списку
+        </button>
+
+        <div class="card">
+            <div class="card-header">
+                <h2>Создание новой заявки</h2>
+            </div>
+
+
+            <form id="createRequestForm" onsubmit="handleCreateRequest(event)">
+
+                <div class="form-group">
+                    <label for="equipmentTypeId">Тип оборудования *</label>
+                    <select id="equipmentTypeId" required>
+                        <option value="">Выберите тип оборудования</option>
+                    </select>
+                </div>
+
+                <div class="form-group">
+                    <label for="equipmentModel">Модель оборудования *</label>
+                    <input type="text" id="equipmentModel"
+                           maxlength="200" required
+                           placeholder="Введите модель оборудования">
+                    <small class="form-text text-muted">Максимум 200 символов</small>
+                </div>
+
+                <div class="form-group">
+                    <label for="problemDescription">Описание проблемы *</label>
+                    <textarea id="problemDescription"
+                              maxlength="1000" required
+                              placeholder="Опишите проблему подробно"></textarea>
+                    <small class="form-text text-muted">Максимум 1000 символов</small>
+                </div>
+
+                <div id="clientSelectGroup" class="form-group" style="display: none;">
+                    <label for="clientId">Заказчик *</label>
+                    <select id="clientId" required>
+                        <option value="">Выберите заказчика</option>
+                    </select>
+                </div>
+
+                <div id="clientInfo" class="card" style="background: #f8f9fa; display: none;">
+                    <h4>Ваши контактные данные</h4>
+                    <p><strong>ФИО:</strong> <span id="clientFullName"></span></p>
+                    <p><strong>Телефон:</strong> <span id="clientPhone"></span></p>
+                </div>
+
+                <div id="errorMessage" class="alert alert-danger" style="display: none;"></div>
+
+                <div class="form-row" style="margin-top: 30px;">
+                    <button type="submit" class="btn btn-primary">Создать заявку</button>
+                    <button type="button" class="btn btn-secondary" onclick="goBack()">Отмена</button>
+                </div>
+            </form>
+        </div>
+    </div>
+
+    <script src="/js/api.js"></script>
+    <script src="/js/navigation.js"></script>
+    <script src="/js/create-request.js"></script>
+</body>
+</html>

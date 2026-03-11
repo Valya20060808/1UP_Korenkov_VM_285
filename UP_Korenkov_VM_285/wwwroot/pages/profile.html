@@ -1,0 +1,97 @@
+﻿<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Профиль пользователя - Учёт заявок на ремонт</title>
+    <link rel="stylesheet" href="/css/styles.css">
+</head>
+<body>
+
+    <nav class="navbar">
+        <div class="nav-brand">
+            <a href="/pages/requests.html">Ремонт климатического оборудования</a>
+        </div>
+        <ul class="nav-menu"></ul>
+    </nav>
+
+    <div class="container">
+
+        <button class="btn btn-secondary" onclick="goBack()" style="margin-bottom: 20px;">
+            ← Назад к списку заявок
+        </button>
+
+        <div id="loading" class="loading">Загрузка данных профиля...</div>
+
+        <div id="profileContent" style="display: none;">
+            <div class="card">
+                <div class="card-header">
+                    <h2>Мой профиль</h2>
+                    <span class="status-badge" id="userRole"></span>
+                </div>
+
+                <div class="form-group">
+                    <label>ID пользователя</label>
+                    <p class="form-control-static" id="userId"></p>
+                </div>
+
+                <form id="profileForm" onsubmit="handleUpdateProfile(event)">
+                    <div class="form-group">
+                        <label for="fullName">ФИО *</label>
+                        <input type="text" id="fullName" class="form-control" required>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="phone">Телефон *</label>
+                        <input type="tel" id="phone" class="form-control" required
+                               pattern="^[0-9+\-\s()]{10,20}$"
+                               title="Введите корректный номер телефона"
+                               placeholder="+7 (999) 123-45-67">
+                    </div>
+
+                    <div class="form-group">
+                        <label for="login">Логин</label>
+                        <input type="text" id="login" class="form-control" readonly disabled>
+                        <small class="form-text text-muted">Логин нельзя изменить</small>
+                    </div>
+
+                    <button type="submit" class="btn btn-primary">Сохранить изменения</button>
+                </form>
+            </div>
+
+            <div class="card">
+                <div class="card-header">
+                    <h3>Смена пароля</h3>
+                </div>
+
+                <form id="changePasswordForm" onsubmit="handleChangePassword(event)">
+                    <div class="form-group">
+                        <label for="oldPassword">Текущий пароль *</label>
+                        <input type="password" id="oldPassword" class="form-control" required>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="newPassword">Новый пароль *</label>
+                        <input type="password" id="newPassword" class="form-control" required minlength="4">
+                        <small class="form-text text-muted">Минимум 4 символа</small>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="confirmPassword">Подтвердите пароль *</label>
+                        <input type="password" id="confirmPassword" class="form-control" required>
+                    </div>
+
+                    <button type="submit" class="btn btn-primary">Изменить пароль</button>
+                </form>
+            </div>
+        </div>
+
+        <div id="errorMessage" class="alert alert-danger" style="display: none;"></div>
+        <div id="successMessage" class="alert alert-success" style="display: none;"></div>
+    </div>
+
+    <script src="/js/api.js"></script>
+    <script src="/js/navigation.js"></script>
+    <script src="/js/profile.js"></script>
+</body>
+</html>
